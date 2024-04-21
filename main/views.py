@@ -1,18 +1,20 @@
 from django.http import Http404
 from django.shortcuts import render
 
-from main.models import Car, Sale
+from .models import Car, Sale
 
 
 def cars_list_view(request):
-    context = Car.objects.all()
+    #context = Car.objects.all()
+    cars = Car.objects.all()
+    context = {'cars': cars}
     template_name = 'main/list.html'
     return render(request, template_name, context)  
 
 
 def car_details_view(request, car_id):
     try:
-        context = Car.objects.filter(id=car_id)
+        context = Car.objects.get(id=car_id)
         template_name = 'main/details.html'
         return render(request, template_name, context)
     except Car.DoesNotExist:
