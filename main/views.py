@@ -14,7 +14,7 @@ def cars_list_view(request):
 
 def car_details_view(request, car_id):
     try:
-        context = Car.objects.get(id=car_id)
+        context = {'car': Car.objects.get(id=car_id)}
         template_name = 'main/details.html'
         return render(request, template_name, context)
     except Car.DoesNotExist:
@@ -25,9 +25,9 @@ def car_details_view(request, car_id):
 
 def sales_by_car(request, car_id):
     try:
-        car_ = Car.objects.filter(id=car_id)
+        car_ = Car.objects.get(id=car_id)
         try:
-            context = Sale.objects.filter(car = car_)
+            context = {'sales': Sale.objects.filter(car = car_)}
             template_name = 'main/sales.html'
             return render(request, template_name, context)
         except Sale.DoesNotExist:
